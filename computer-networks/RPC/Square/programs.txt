@@ -1,0 +1,40 @@
+Server :
+
+#include "square.h"
+
+int *
+square_1_svc(args *argp, struct svc_req *rqstp)
+{
+	static int  result;
+	printf("Got a request Number %d\n", argp->num);
+	result=argp->num*argp->num;
+	return &result;
+}
+
+Client :
+
+void
+square_calc_1(char *host)
+{
+	CLIENT *clnt;
+	int  *result_1;
+	args  square_1_arg;
+
+#ifndef	DEBUG
+	clnt = clnt_create (host, SQUARE_CALC, SQUARE_CALC_1, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror (host);
+		exit (1);
+	}
+#endif	/* DEBUG */
+	printf("Enter Number: \n");
+	scanf("%d", &square_1_arg.num);
+	result_1 = square_1(&square_1_arg, clnt);
+	if (result_1 == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	printf("%d\n", *result_1);
+#ifndef	DEBUG
+	clnt_destroy (clnt);
+#endif	 /* DEBUG */
+} 

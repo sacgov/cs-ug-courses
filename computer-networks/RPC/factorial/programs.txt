@@ -1,0 +1,41 @@
+Server:
+	static int  result =1;
+
+	/*
+	 * insert server code here
+	 */
+	 int i=0;
+	 for(i=1;i<=argp->num;i++)
+	 	result *=i;
+	 printf("%d\n",result );
+
+	return &result;
+
+Client:
+
+void
+fact_1(char *host)
+{
+	CLIENT *clnt;
+	int  *result_1;
+	for_factorial  fact_calc_1_arg;
+
+#ifndef	DEBUG
+	clnt = clnt_create (host, FACT, FACT_1, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror (host);
+		exit (1);
+	}
+#endif	/* DEBUG */
+	printf("enter the number for factorial\n");
+	scanf("%d",&fact_calc_1_arg.num)
+
+	result_1 = fact_calc_1(&fact_calc_1_arg, clnt);
+	if (result_1 == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	printf("factorial is :%d\n",*result_1 );
+#ifndef	DEBUG
+	clnt_destroy (clnt);
+#endif	 /* DEBUG */
+}

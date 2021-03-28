@@ -1,0 +1,1 @@
+It constructs the parsing tables itself using the productions and parses the string given
